@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:600&display=swap');
+
+*{
+    box-sizing: border-box;
+    font-family: 'Work Sans', sans-serif;
+}
+body{
+    margin: 0;
+    flex-direction: column;
+    display: flex;
+    height: 100vh;
+}
+main{
+    width: 100%;
+    display: flex;
+    justify-content: stretch;
+    flex-wrap: wrap;
+    height: 100vh;
+    flex: 1;
+}
+.side{
+    flex-basis: 50%;
+    /* height: ; */
+    border: 3px solid #CCC;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 1;
+}
+.side:last-child{
+    text-align: right;
+    
+}
+
+.side-header{
+    background: #EEE;
+    padding: 20px;
+    width: 100%;
+}
+
+.symbol{
+    margin: auto 0px;
+    font-size: 150px;
+}
+
+.win{
+    animation: win .3s  infinite;
+}
+.lose{
+    animation: lose .3s  infinite;
+}
+
+@keyframes win{
+    from {background: transparent;}
+    to {background: rgb(124, 199, 124)}
+}
+@keyframes lose{
+    from {background: transparent;}
+    to {background: rgb(199, 124, 124)}
+}
+
+.instructions{
+    text-align: center;
+    background: #444;
+    color: #FFF;
+    padding: 20px;
+    
+    
+}

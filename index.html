@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rock Paper Scissors</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <main>
+    <div class="side player-side">
+      <div class="side-header">
+        <h2>Player</h2>
+        <h3>score: <span class="score player-score">0</span></h3>
+    </div>
+    <div class="symbol player-symbol">🤘</div>
+    </div>
+    <div class="side computer-side">
+        <div class="side-header">
+            <h2>Computer</h2>
+            <h3>score: <span class="score computer-score">0</span></h3>
+        </div>
+        <div class="symbol computer-symbol">🧻</div>
+        </div>
+    </div>
+    
+  </main>
+  <div class="instructions">
+    <h2>Press r, p, or s to play</h2>
+  </div>
+
+  <div id="game">
+
+  </div>
+
+  <script type="text/javascript">
+
+    // Creates an array that lists out all of the options (Rock, Paper, or Scissors).
+    // var computerChoices = ["r", "p", "s"];
+
+    var userScore = 0;
+    var computerScore = 0;
+
+    var choices = [
+      {
+        key: "r",
+        beats: "s",
+        word: "rock",
+        symbol: "🤘"
+      },
+      {
+        key: "p",
+        beats: "r",
+        word: "paper",
+        symbol: "🧻"
+      },
+      {
+        key: "s",
+        beats: "p",
+        word: "scissors",
+        symbol: "✂"
+      }
+    ];
+    var choiceArray = choices.map(function (choice){return choice.key});
+    var playerSide = document.querySelector(".player-side");
+    var computerSide = document.querySelector(".computer-side");
+    var playerSymbol = document.querySelector(".player-symbol");
+    var computerSymbol = document.querySelector(".computer-symbol");
+    var playerScoreDisplay = document.querySelector(".player-score");
+    var computerScoreDisplay = document.querySelector(".computer-score");
+    var i = 0
+    function symbolSpin(){
+        playerSymbol.textContent = choices[i].symbol;
+                computerSymbol.textContent = choices[i].symbol;     
+                i++
+                if (i === 3){i = 0}
+    }
+    var spinEm = setInterval(symbolSpin, 100);
+    
+    
+    
+    document.onkeyup = function(event) {
+      if (choiceArray.indexOf(event.key) !== -1){
+        window.clearInterval(spinEm);
+        var userGuess = choices.filter(choice => choice.key === event.key)[0];
+        console.log("user guesses: " + userGuess.word)
+        playerSymbol.textContent = userGuess.symbol;
+        var computerGuess = choices[Math.floor(Math.random() * choices.length)];
+        console.log("computer guesses: " + computerGuess.word)
+        computerSymbol.textContent = computerGuess.symbol;
+        if(userGuess.beats == computerGuess.key){
+          userScore++;
+          playerScoreDisplay.textContent = userScore;
+          playerSide.classList.add("win");
+          computerSide.classList.add("lose");
+          setTimeout(function() {
+            playerSide.classList.remove("win");
+            computerSide.classList.remove("lose");
+            window.clearInterval(spinEm);
+            spinEm = setInterval(symbolSpin, 100);
+          }, 1000);
+        }else if( userGuess.key == computerGuess.beats){
+          computerScore++;
+          computerScoreDisplay.textContent = computerScore;
+          playerSide.classList.add("lose");
+          computerSide.classList.add("win");
+          setTimeout(function() {
+            playerSide.classList.remove("lose");
+            computerSide.classList.remove("win");
+            window.clearInterval(spinEm);
+            spinEm = setInterval(symbolSpin, 100);
+          }, 1000);
+        }else{
+          playerSide.classList.add("lose");
+          computerSide.classList.add("lose");
+          setTimeout(function() {
+            playerSide.classList.remove("lose");
+            computerSide.classList.remove("lose");
+            window.clearInterval(spinEm);
+            spinEm = setInterval(symbolSpin, 100);
+          }, 1000);
+        }
+
+      }
+
+    };
+  </script>
+
+</body>
+
+</html>
