@@ -37,12 +37,13 @@
 
   <script type="text/javascript">
 
-    // Creates an array that lists out all of the options (Rock, Paper, or Scissors).
-    // var computerChoices = ["r", "p", "s"];
 
+    // define scores and set up to zero
     var userScore = 0;
     var computerScore = 0;
+    var ties = 0;
 
+    // create an object array of possible choices, including the choices that they beat
     var choices = [
       {
         key: "r",
@@ -69,13 +70,16 @@
         symbol: "🧨"
       }
     ];
+    // form a simpler array containing only the choice keys
     var choiceArray = choices.map(function (choice){return choice.key});
+    // query all of the DOM elements that we will change
     var playerSide = document.querySelector(".player-side");
     var computerSide = document.querySelector(".computer-side");
     var playerSymbol = document.querySelector(".player-symbol");
     var computerSymbol = document.querySelector(".computer-symbol");
     var playerScoreDisplay = document.querySelector(".player-score");
     var computerScoreDisplay = document.querySelector(".computer-score");
+    // create function that will cycle through each symbol
     var i = 0
     function symbolSpin(){
         playerSymbol.textContent = choices[i].symbol;
@@ -83,28 +87,40 @@
                 i++
                 if (i === 3){i = 0}
     }
+    // set the cycling function to rapidly repeat
     var spinEm = setInterval(symbolSpin, 100);
-    
-    
-    
+    // check for user input    
     document.onkeyup = function(event) {
+      // check if input is one of the available choices  
       if (choiceArray.indexOf(event.key) !== -1){
+        // stop cycling symbols
         window.clearInterval(spinEm);
+        // set user's guess to the choice object based on the key they pressed
         var userGuess = choices.filter(choice => choice.key === event.key)[0];
+        // set user's symbol to the choice they picked
         playerSymbol.textContent = userGuess.symbol;
+        // set computers choice randomly
         var computerGuess = choices[Math.floor(Math.random() * 3)];
+        // set computers symbol
         computerSymbol.textContent = computerGuess.symbol;
+        // check if user's choice beats the computers
         if(userGuess.beats.indexOf(computerGuess.key) >= 0){
+          // increment user's score
           userScore++;
+          // update score display
           playerScoreDisplay.textContent = userScore;
+          // add the flashing "win/lose" classes to each side
           playerSide.classList.add("win");
           computerSide.classList.add("lose");
+          // set a timer to let it keep flashing for a second
           setTimeout(function() {
+            // after a bit, clear the classes and make the symbols cycle again
             playerSide.classList.remove("win");
             computerSide.classList.remove("lose");
             window.clearInterval(spinEm);
             spinEm = setInterval(symbolSpin, 100);
           }, 1000);
+          // if the user didn't win, see if the computer did
         }else if(computerGuess.beats.indexOf(userGuess.key) >= 0){
           computerScore++;
           computerScoreDisplay.textContent = computerScore;
@@ -117,8 +133,12 @@
             spinEm = setInterval(symbolSpin, 100);
           }, 1000);
         }else{
+          // must be a tie, right?
           playerSide.classList.add("lose");
           computerSide.classList.add("lose");
+          ties++
+          // Console log tie count
+          console.log("👔 Who counts ties? "+ties)
           setTimeout(function() {
             playerSide.classList.remove("lose");
             computerSide.classList.remove("lose");
