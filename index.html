@@ -90,7 +90,7 @@
         var computerGuess = choices[Math.floor(Math.random() * choices.length)];
         console.log("computer guesses: " + computerGuess.word)
         computerSymbol.textContent = computerGuess.symbol;
-        if(userGuess.beats == computerGuess.key){
+        if(userGuess.beats === computerGuess.key){
           userScore++;
           playerScoreDisplay.textContent = userScore;
           playerSide.classList.add("win");
@@ -101,7 +101,7 @@
             window.clearInterval(spinEm);
             spinEm = setInterval(symbolSpin, 100);
           }, 1000);
-        }else if( userGuess.key == computerGuess.beats){
+        }else if( userGuess.key === computerGuess.beats){
           computerScore++;
           computerScoreDisplay.textContent = computerScore;
           playerSide.classList.add("lose");
