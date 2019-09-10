@@ -85,10 +85,8 @@
       if (choiceArray.indexOf(event.key) !== -1){
         window.clearInterval(spinEm);
         var userGuess = choices.filter(choice => choice.key === event.key)[0];
-        console.log("user guesses: " + userGuess.word)
         playerSymbol.textContent = userGuess.symbol;
         var computerGuess = choices[Math.floor(Math.random() * choices.length)];
-        console.log("computer guesses: " + computerGuess.word)
         computerSymbol.textContent = computerGuess.symbol;
         if(userGuess.beats === computerGuess.key){
           userScore++;
