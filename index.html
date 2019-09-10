@@ -61,6 +61,12 @@
         beats: "p",
         word: "scissors",
         symbol: "✂"
+      },
+      {
+        key: "d",
+        beats: ["s", "p", "r"],
+        word: "dynamite",
+        symbol: "🧨"
       }
     ];
     var choiceArray = choices.map(function (choice){return choice.key});
@@ -86,9 +92,9 @@
         window.clearInterval(spinEm);
         var userGuess = choices.filter(choice => choice.key === event.key)[0];
         playerSymbol.textContent = userGuess.symbol;
-        var computerGuess = choices[Math.floor(Math.random() * choices.length)];
+        var computerGuess = choices[Math.floor(Math.random() * 3)];
         computerSymbol.textContent = computerGuess.symbol;
-        if(userGuess.beats === computerGuess.key){
+        if(userGuess.beats.indexOf(computerGuess.key) >= 0){
           userScore++;
           playerScoreDisplay.textContent = userScore;
           playerSide.classList.add("win");
@@ -99,7 +105,7 @@
             window.clearInterval(spinEm);
             spinEm = setInterval(symbolSpin, 100);
           }, 1000);
-        }else if( userGuess.key === computerGuess.beats){
+        }else if(computerGuess.beats.indexOf(userGuess.key) >= 0){
           computerScore++;
           computerScoreDisplay.textContent = computerScore;
           playerSide.classList.add("lose");
